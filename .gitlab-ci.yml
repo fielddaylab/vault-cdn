@@ -12,6 +12,8 @@ build:
   stage: build
   script:
     - echo $S3_BUCKET_NAME
+
+   only: master
 # upload_artifact_master:
 #   stage: upload
 #   script:
@@ -27,7 +29,6 @@ build:
 #   stage: deploy
 #   script:
 #     - aws s3 sync --acl public-read --sse --delete s3://$TEST_S3_BUCKET_NAME s3://$PROD_S3_BUCKET_NAME
-   only:
-     - master
+
 #   when: manual
 
