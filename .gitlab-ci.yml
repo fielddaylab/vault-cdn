@@ -27,7 +27,7 @@ build:
 #   stage: deploy
 #   script:
 #     - aws s3 sync --acl public-read --sse --delete s3://$TEST_S3_BUCKET_NAME s3://$PROD_S3_BUCKET_NAME
-#   only:
-#     - master
+   only:
+     - master
 #   when: manual
 
