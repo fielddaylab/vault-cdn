@@ -5,7 +5,7 @@ deploy:
   image: python:3.6
   stage: deploy
   tags:
-    - python
+    - aws
     - docker
   before_script:
     - pip install awscli -q
