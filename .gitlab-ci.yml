@@ -1,32 +1,17 @@
-image: alpine:latest
-
-variables:
-  S3_BUCKET_NAME: $CI_PROJECT_NAME
-
 stages:
-  - build
+  - deploy
 
-build:
-  stage: build
+deploy:
+  image: python:3.6
+  stage: deploy
+  tags:
+    - python
+    - docker
+  before_script:
+    - pip install awscli -q
   script:
-    - echo $S3_BUCKET_NAME
+    - aws s3 sync ./dist s3://$S3_BUCKET_NAME/ --delete --acl public-read
+    - aws cloudfront create-invalidation --distribution-id ${AWS_DISTRIBUTION_ID} --paths "/*"
+  when: manual
   only:
     - master
-# upload_artifact_master:
-#   stage: upload
-#   script:
-#     - npm install
-#     - ng build --prod --base-href /degree-planner --deploy-url /degree-planner/
-#     - VERSION=$(node -p -e "require('./package.json').version")
-#     - tar czf ./course-search-enroll-fe-$VERSION-master.tar.gz -C dist/course-search-enroll-fe ./
-#     - aws s3 cp ./course-search-enroll-fe-$VERSION-master.tar.gz s3://enroll-app-front-end-builds/course-search-enroll-fe-$VERSION-master.tar.gz
-#   only:
-#     - master
-
-# deploy_dwh_test:
-#   stage: deploy
-#   script:
-#     - aws s3 sync --acl public-read --sse --delete s3://$TEST_S3_BUCKET_NAME s3://$PROD_S3_BUCKET_NAME
-
-#   when: manual
-
