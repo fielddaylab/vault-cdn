@@ -10,7 +10,7 @@ deploy:
   before_script:
     - pip install awscli -q
   script:
-    - aws s3 sync ./dist s3://$S3_BUCKET_NAME/ --delete --acl public-read
+    - aws s3 sync ./public s3://$S3_BUCKET_NAME/ --delete --acl public-read
     - aws cloudfront create-invalidation --distribution-id ${AWS_DISTRIBUTION_ID} --paths "/*"
   when: manual
   only:
