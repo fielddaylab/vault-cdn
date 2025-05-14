@@ -1,3 +1,1 @@
-### Static Site Seed Project
-another line
-another line
+### play.vaultlearninggames.org
